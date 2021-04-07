@@ -1,0 +1,18 @@
+
+syntax = "proto3";
+package proto;
+option java_package = "cyan.simple.protobuf.model.proto";
+option java_outer_classname = "StudentProto";
+
+message StudentsMessage{
+    repeated StudentMessage students = 1;
+}
+
+message StudentMessage{
+    // 姓名
+    string name = 1;
+    // 年龄
+    int32 age = 2;
+    // 性别
+    string sex = 3;
+}

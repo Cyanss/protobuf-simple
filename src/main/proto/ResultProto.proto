@@ -1,0 +1,34 @@
+syntax = "proto3";
+package proto;
+import "ClassProto.proto";
+import "TeacherProto.proto";
+import "StudentProto.proto";
+option java_package = "cyan.simple.protobuf.model.proto";
+option java_outer_classname = "ResultProto";
+
+message ResultMessage {
+    // 状态码
+    int32 status        = 1;
+    // 信息
+    string message      = 2;
+    // 数据
+    oneof data {
+        // 单个班级信息
+        ClassMessage class = 3;
+        // 这里没办法直接写 repeated ClassMessage classes = 4;
+        // 需要在外部包装一层对象
+        ClassesMessage classes = 4;
+        // 单个教师信息
+        TeacherMessage teacher = 5;
+        // 这里没办法直接写 repeated TeacherMessage teachers = 6;
+        // 需要在外部包装一层对象
+        TeachersMessage teachers = 6;
+        // 单个学生信息
+        StudentMessage student = 7;
+        // 这里没办法直接写 repeated TeacherMessage teachers = 8;
+        // 需要在外部包装一层对象
+        StudentsMessage students = 8;
+    }
+    // 时间
+    int64 timestamp     = 9;
+}

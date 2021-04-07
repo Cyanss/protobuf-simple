@@ -1,0 +1,16 @@
+syntax = "proto3";
+package proto;
+option java_package = "cyan.simple.protobuf.model.proto";
+option java_outer_classname = "FilterProto";
+
+
+message FilterBodyMessage {
+    oneof body {
+        FilterMessage filter = 1;
+    }
+}
+
+message FilterMessage {
+    // 根据名称查询
+    string name = 1;
+}
