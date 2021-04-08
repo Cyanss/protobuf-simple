@@ -37,7 +37,6 @@ public class Result<T> implements Serializable {
             pattern = "yyyy-MM-dd HH:mm:ss",
             timezone = "GMT+8"
     )
-    @Builder.Default
     private Date timestamp = new Date();
 
     public Result(Integer status, String message) {

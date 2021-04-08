@@ -2,6 +2,7 @@ package cyan.simple.protobuf.service.impl;
 
 import cyan.simple.protobuf.model.Teacher;
 import cyan.simple.protobuf.service.TeacherService;
+import cyan.simple.protobuf.util.GeneralUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher queryByTeacherName(String name) {
         /** 模拟通过教师名称查询教师数据服务 */
-        if (name != null && name.trim().length() > 0) {
+        if (GeneralUtils.isNotEmpty(name)) {
             return Teacher.builder().name(name).age(28).sex("男").subject("数学").build();
         }
         /** 教师名称参数为空的异常抛出省略 */

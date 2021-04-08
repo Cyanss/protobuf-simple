@@ -1,6 +1,5 @@
 package cyan.simple.protobuf.service;
 
-import cyan.simple.protobuf.model.Class;
 import cyan.simple.protobuf.model.Student;
 
 /**

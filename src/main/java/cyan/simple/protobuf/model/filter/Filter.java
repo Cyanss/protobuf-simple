@@ -19,7 +19,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Filter implements Serializable {
-    /** 班级名称 */
+    /** 名称 */
     private String name;
 
     //TODO 其他查询条件

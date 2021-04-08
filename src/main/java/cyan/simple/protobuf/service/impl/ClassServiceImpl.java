@@ -4,6 +4,7 @@ import cyan.simple.protobuf.model.Class;
 import cyan.simple.protobuf.model.Student;
 import cyan.simple.protobuf.model.Teacher;
 import cyan.simple.protobuf.service.ClassService;
+import cyan.simple.protobuf.util.GeneralUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ import java.util.Collections;
  * @group cyan.tool.kit
  * @date 8:44 2021/4/6
  */
-@Slf4j
 @Service
 public class ClassServiceImpl implements ClassService {
 
@@ -29,7 +29,7 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Class queryByClassName(String name) {
         /** 模拟通过班级名称查询班级数据服务 */
-        if (name != null && name.trim().length() > 0) {
+        if (GeneralUtils.isNotEmpty(name)) {
             Class.ClassBuilder classBuilder = Class.builder();
             classBuilder.name(name).size(45);
             Teacher teacher = Teacher.builder().name("李高数").age(28).sex("男").subject("数学").build();

@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"cyan.simple.protobuf"})
 public class ProtobufAutoConfigure {
     public ProtobufAutoConfigure() {
-        log.debug("================= rest-toolkit-starter initiated ！ ===================");
+        log.info("================= protobuf-simple-configure initiated ！ ===================");
     }
 
     @Bean

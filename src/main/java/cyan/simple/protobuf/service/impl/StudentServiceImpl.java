@@ -1,13 +1,11 @@
 package cyan.simple.protobuf.service.impl;
 
 import cyan.simple.protobuf.model.Student;
-import cyan.simple.protobuf.model.Student;
-import cyan.simple.protobuf.model.Teacher;
 import cyan.simple.protobuf.service.StudentService;
+import cyan.simple.protobuf.util.GeneralUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * <p>StudentServiceImpl</p>
@@ -27,7 +25,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student queryByStudentName(String name) {
         /** 模拟通过学生名称查询学生数据服务 */
-        if (name != null && name.trim().length() > 0) {
+        if (GeneralUtils.isNotEmpty(name)) {
             return Student.builder().name(name).age(15).sex("男").build();
         }
         /** 学生名称参数为空的异常抛出省略 */
