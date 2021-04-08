@@ -1049,6 +1049,66 @@ public class ClassController {
 
 ```
 
+&emsp;&emsp;在<code>cyan.simple.protobuf</code>包下新建<code>handler</code>包,抽取<code>Controller</code>里可复用代码。
+
+- > 共用方法处理类 <code>ProtoHandler.java</code>
+
+```java
+@Component
+public class ProtoHandler implements InitializingBean {
+
+    @Autowired
+    private FormatFactory formatFactory;
+
+    private static ProtoHandler INSTANCE = null;
+
+    private static ProtobufFormatter FORMATTER = null;
+
+    public static ProtobufFormatter getFormatter() {
+        return FORMATTER;
+    }
+
+    public static ProtoHandler getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        INSTANCE = this;
+        FORMATTER = formatFactory.createFormatter(FormatFactory.Formatter.JSON);
+    }
+
+    public static Filter parserFilter(HttpServletRequest request) throws IOException {
+        byte[] bytes = StreamUtils.copyToByteArray(request.getInputStream());
+        FilterProto.FilterMessage filterMessage = FilterProto.FilterMessage.parseFrom(bytes);
+        /** 这里可以将 ProtobufFormatter 封装成静态工具类 */
+
+        String jsonString = FORMATTER.printToString(filterMessage);
+        Filter filter = JsonUtils.parserBean(jsonString, Filter.class);
+        if (GeneralUtils.isEmpty(filter)) {
+            throw new RuntimeException("json数据反序列化失败：" + jsonString);
+        }
+        return filter;
+    }
+
+    public static void formatMessage(ProtobufFormatter formatter, Object object, Message.Builder builder) throws IOException {
+        String parserJson = JsonUtils.parserJson(object);
+        if (GeneralUtils.isNotEmpty(parserJson)) {
+            formatter.merge(new ByteArrayInputStream(parserJson.getBytes()), builder);
+        }
+    }
+
+    public static void writeError(Throwable exception, ServletOutputStream outputStream) throws IOException {
+        Result result = new Result(Result.ERROR, exception.getMessage());
+        String parserJson = JsonUtils.parserJson(result);
+        if (GeneralUtils.isNotEmpty(parserJson)) {
+            /** outputStream 抛出的IO异常直接抛出 */
+            outputStream.write(parserJson.getBytes());
+        }
+    }
+}
+```
+
 ## 八、Postman & Protoman测试接口
 
 &emsp;&emsp;打开<code>Postman</code>工具，右上角新建<code>Environments</code>环境，名称为<code>Localhost:8080</code>,<code>Variable</code>的值为<code>HostPort</code>，
